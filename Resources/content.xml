@@ -1,0 +1,150 @@
+<?xml version="1.0"?>  
+<partners>
+    <partner name="Lorenzo Apicella" headshot="apicella.jpg">
+	    <images>
+			<image>
+	    		<source>459.jpg</source>
+	    		<info>459 Building</info>
+	    	</image>				
+		</images>
+		<bio>
+		</bio>
+	</partner> 
+	<partner name="James Biber" headshot="biber.jpg">
+	    <images>
+			<image>
+	    		<source>459.jpg</source>
+	    		<info>459 Building</info>
+	    	</image>				
+		</images>
+		<bio></bio>
+	</partner>  
+    <partner name="Michael Beirut" headshot="bierut.jpg">
+	    <images>
+			<image>
+	    		<source>459.jpg</source>
+	    		<info>459 Building</info>
+	    	</image>				
+		</images>
+		<bio>
+		</bio>
+	</partner> 
+	<partner name="Michael Gericke" headshot="gericke.jpg">
+	    <images>
+			<image>
+	    		<source>459.jpg</source>
+	    		<info>459 Building</info>
+	    	</image>				
+		</images>
+		<bio>
+		</bio>
+	</partner> 
+	<partner name="Luke Hayman" headshot="hayman.jpg">
+	    <images>
+		</images>
+		<bio>
+		</bio>
+	</partner>
+    <partner name="Angus Hyland" headshot="hyland.jpg">
+	    <images>	
+		</images>
+		<bio>
+		</bio>
+	</partner> 
+    <partner name="Domenic Lippa" headshot="lippa.jpg">
+	    <images>	
+		</images>
+		<bio>
+		</bio>
+	</partner> 	
+     <partner name="Abbot Miller" headshot="miller.jpg">
+	    <images>
+		</images>
+		<bio>
+		</bio>
+	</partner> 
+     <partner name="Justus Oehler" headshot="oehler.jpg">
+	    <images>
+		</images>
+		<bio>
+		</bio>
+	</partner> 	
+     <partner name="Harry Pearce" headshot="pearce.jpg">
+	    <images>
+		</images>
+		<bio>
+		</bio>
+	</partner> 	
+    <partner name="John Rushworth" headshot="Rushworth_TN.jpg">
+	    <images>	
+		</images>
+		<bio>
+		</bio>
+	</partner> 	
+    <partner name="William Russell" headshot="russell.jpg">
+	    <images>	
+		</images>
+		<bio>
+		</bio>
+	</partner> 	
+    <partner name="Paula Scher" headshot="scher.jpg">
+	    <images>
+		</images>
+		<bio>
+		</bio>
+	</partner>
+    <partner name="DJ Stout" headshot="stout.jpg">
+	    <images>
+		</images>
+		<bio>
+		</bio>
+	</partner>	
+    <partner name="Lisa Strausfeld" headshot="Strausfeld_TN2.jpg">
+	    <images>
+		</images>
+		<bio>
+		</bio>
+	</partner>		
+    <partner name="Daniel Weil" headshot="weil.jpg">
+	    <images>
+		</images>
+		<bio>
+		</bio>
+	</partner>		
+    <partner name="Eddie Opara" headshot="eddie.png">
+	    <images dir="images/eddie/">
+	    	<image>
+	    		<source>459.jpg</source>
+	    		<info>459 Building</info>
+	    	</image>	
+	    	<image>
+	    		<source>836Bergen.jpg</source>
+	    		<info>Bergen</info>
+	    	</image>
+	    	<image>
+	    		<source>459.jpg</source>
+	    		<info>459 Building</info>
+	    	</image>	
+	    	<image>
+	    		<source>bfcm.jpg</source>
+	    		<info>BCFM</info>
+	    	</image>
+	    	<image>
+	    		<source>matin.jpg</source>
+	    		<info>Gallery Matin</info>
+	    	</image>	
+	    	<image>
+	    		<source>morningside.jpg</source>
+	    		<info>Morningside</info>
+	    	</image>
+	    	<image>
+	    		<source>sophie.jpg</source>
+	    		<info>Sophie</info>
+	    	</image>	    			    		
+		</images>
+		<bio><![CDATA[ British-born Eddie Opara is a partner with a background in multiple design areas. His projects include designing large print / packaging projects, web and interface design, environmental graphics and branding for clients such as Brooklyn Museum, Studio Museum Harlem, Mori Art Museum, Vitra, Prada and Morgan Stanley. Winning numerous award such as Art Director Club Gold medal, AIGA 365 and ID Magazine Awards. His work has appeared in publications such as Archis, ID Magazine, Graphis, and Surface. His work as part of 2x4 is part of the permanent collection at the MoMA.
+
+Currently focused on building Map, Eddie is a visting critic at Yale University and was recently a lecturer at RISD and Columbia University School of Architecture before that he lectured at Yale University School of Art from 1998 - 2004. Eddie received his Bachelor of Arts in Graphic Design from the London College of Printing in 1995, and a MFA in Graphic Design from Yale University in 1997.]]></bio>
+	</partner>  
+		   
+</partners>

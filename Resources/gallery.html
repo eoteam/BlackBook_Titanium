@@ -1,0 +1,80 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta name="description" content="" />
+	<meta name="keywords" content="" />
+
+	<script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
+	<script type="text/javascript" src="js/jquery-ui-1.8.2.custom.min.js"></script>
+	<script type="text/javascript" src="js/jquery.metadata.js"></script>
+	<script type="text/javascript" src="js/jquery.sizes.js"></script>
+	<script type="text/javascript" src="js/jlayout.border.js"></script>
+	<script type="text/javascript" src="js/jlayout.grid.js"></script>
+	<script type="text/javascript" src="js/jlayout.flexgrid.js"></script>
+	<script type="text/javascript" src="js/jlayout.flow.js"></script>
+	<script type="text/javascript" src="js/jquery.jlayout.js"></script>
+	
+	<style type="text/css">  
+	body {
+		width: 100%;
+		height: 100%;
+		background-color: #000;
+	}
+	#container {
+		overflow: auto;
+		width: 100%;
+		height: 100%;
+	}
+
+	#container div {
+		background-color: #fff;
+		width:50px;
+		height:50px;
+		display:inline-block;
+	}    
+	#container img {
+		width:50px;
+		height:50px
+	}     
+	</style>
+</head>
+
+<body>
+
+   <div  id="container" class="{layout: {type: 'flow', resize: false, alignment: 'left', vgap: 10, hgap:10}}">
+      
+	</div>  
+
+	<script type="text/javascript">
+	
+			Ti.App.addEventListener('pageReady',function(e)
+			{	
+				for (var i=0;i<e.data.images.length;i++)
+				{
+					$('#container').append('<div onclick="imageClickHandler('+i+')"><img src="'+e.data.dir+e.data.images[i].source+'"></img></div>');
+				}
+				$('#container').layout();
+
+			});
+			
+			Ti.App.addEventListener('orientationChanged',function(e)
+			{	
+				Ti.API.info("resize");
+				$('#container').layout();
+
+			});
+	
+			
+			jQuery(function($)
+			{    
+								 					
+				$(window).resize(function() {
+					$('#container').layout();
+				});
+				
+			});
+			function imageClickHandler(index) {
+				Ti.App.fireEvent("imageSelected",{index:index});
+			}			
+	</script>
+</body>
+</html>
