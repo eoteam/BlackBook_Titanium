@@ -1,8 +1,32 @@
 
 var win = Titanium.UI.currentWindow;     
-
-
 win.backButtonTitle = "Back";
+
+var loadView = Ti.UI.createView({
+    backgroundColor: '#d8d8d8',
+    height: 480,
+    width: 320
+});
+var loadingScreen = Titanium.UI.createActivityIndicator({
+    height:50,
+    width:210,
+    color:'#404347',
+    font:{fontFamily:'Helvetica Neue', fontSize:14,fontWeight:'normal'},
+    message:'Loading...',
+    style:Titanium.UI.iPhone.ActivityIndicatorStyle.DARK
+});
+loadingScreen.show();
+win.add(loadingScreen);
+
+function adjustImages() {
+
+	for(var i=0;i<images.length;i++) {
+		var img = images[i];
+		img.opacity =1;
+		img.width = 70;
+		img.height = 70;
+	}
+}
 
 var images = [];
 var list;
@@ -50,7 +74,6 @@ dialog2.addEventListener('click', function(e)
 		];
 		w.content = win.data.bio;
 		Titanium.UI.currentTab.open(w,{animated:true}); 
-		//w.open({modal:true,modalStyle:Ti.UI.iPhone.MODAL_PRESENTATION_FULLSCREEN});
 	}
 	else if(e.index == 1) {
 		var w = Titanium.UI.createWindow({
@@ -67,14 +90,9 @@ dialog2.addEventListener('click', function(e)
 		Titanium.UI.LANDSCAPE_RIGHT
 	  ];
 	   w.content = win.data.credits;
-	   //w.open({modal:true,modalStyle:Ti.UI.iPhone.MODAL_PRESENTATION_FULLSCREEN}); 
 	   Titanium.UI.currentTab.open(w,{animated:true}); 
 	}
 	else if(e.index == 2) {
-		/*
-win.close();
-		Ti.App.fireEvent('officeSelected',{index:win.data.officeid});
-*/
 		var w = Titanium.UI.createWindow({
 			backgroundColor:'#000',
 			title: win.data.title,
@@ -87,7 +105,7 @@ win.close();
 		Titanium.UI.PORTRAIT,
 		Titanium.UI.LANDSCAPE_LEFT,
 		Titanium.UI.LANDSCAPE_RIGHT
-	  ];
+	  ];		
 	  Titanium.UI.currentTab.open(w,{animated:true}); 
 	}
 });
@@ -98,112 +116,58 @@ var scrollView = Titanium.UI.createScrollView({
     showVerticalScrollIndicator:true,
     showHorizontalScrollIndicator:true
 });
-/*
-var view = Ti.UI.createView({
-	backgroundColor:'transparent',
-	height:2000,
-	top:0,left:0,right:0
-});	
-scrollView.add(view);
-*/
-
-//win.addEventListener('focus', function() {
-	var offset = 10;
-	var gap = 0;
-	var size = 70;
-	OR = Titanium.UI.orientation;
-	var cols = 4;
-	if(OR == 2 || OR == 4)
-		cols = 6 ;
-	var colcounter = 1;
-	var x = offset; var y = offset;
-	//Ti.API.info("focus  "+images.length);
-	//if(images.length == 0) {
-		for (var i=0;i<win.data.images.length;i++) {
-			var imageView = Titanium.UI.createImageView({
-				image: win.data.dir+'thumbs/'+win.data.images[i].source,
-				width:70,height:70,top:y,left:x
-			});
-			imageView.index = i;
-			images[i] = imageView;
-			imageView.addEventListener('click',function(e){
-		
-				var slideShow = Titanium.UI.createWindow({
-		 			url: 'slideshow.js',
-					backgroundColor:'#000',
-					navBarHidden:false,
-					translucent:true,
-					barColor:'#111'
-				});
-				slideShow.data = win.data;
-				slideShow.index = e.source.index; 
-				slideShow.hideTabBar()
-				Titanium.UI.currentTab.open(slideShow,{animated:true});
-			});
-			
-/*
-			imageView.addEventListener('load',function(e){
-				e.source.width = 70;
-				e.source.height = 70;
-			});
-*/
-		
-
-			scrollView.add(imageView);	
-			x += size+gap;
-			colcounter++;
-			if(colcounter == (cols+1)) {
-				x = offset;
-				y += size+gap;
-				colcounter = 1;
-			}
-			//Ti.API.info(x+","+y)
-		}
 
 
-		//setTimeout(doLayout,1000);
-	/*
-}
-	else {	
-		doLayout();
-	}
-	
-	Ti.Gesture.addEventListener('orientationchange',doLayout);
-		
-});
-*/
-/*
+var offset = 10;
+var gap = 2;
+var size = 70;
+OR = Titanium.UI.orientation;
+var cols = 4;
+if(OR == 2 || OR == 4)
+	cols = 6 ;
+var colcounter = 1;
+var x = offset; var y = offset;
 
-	list = JSON.parse('{ "dir":"'+win.data.dir+'","images":'+ JSON.stringify(win.data.images) + ' }');
-	images = JSON.parse(JSON.stringify(win.data.images));
-	var webview = Ti.UI.createWebView({height:'100%',width:'100%',backgroundColor:'#000'});
-	webview.url = "gallery.html";    
-		 
-	webview.addEventListener('load', function()
-	{
-		Titanium.API.debug('loaded');		
-	   	Ti.App.fireEvent('pageReady',{data:list});
+for (var i=0;i<win.data.images.length;i++) {
+	var imageView = Titanium.UI.createImageView({
+		image: win.data.dir+'thumbs/'+win.data.images[i].source,
+		width:70,height:70,top:y,left:x,opacity:0,
 	});
-	
-	win.add(webview);
-*/
-
+	imageView.index = i;
+	images[i] = imageView;
+	imageView.addEventListener('click',function(e){	
+		var slideShow = Titanium.UI.createWindow({
+		 	url: 'slideshow.js',
+			backgroundColor:'#000',
+			navBarHidden:false,
+			translucent:true,
+			barColor:'#111'
+		});
+		slideShow.data = win.data;
+		slideShow.index = e.source.index; 
+		slideShow.hideTabBar()
+		Titanium.UI.currentTab.open(slideShow,{animated:true});
+	});		
+	scrollView.add(imageView);	
+	x += size+gap;
+	colcounter++;
+	if(colcounter == (cols+1)) {
+		x = offset;
+		y += size+gap;
+		colcounter = 1;
+	}
+}
+loadingScreen.hide();
+win.remove(loadingScreen);
+setTimeout(adjustImages,1000);
 
 Ti.Gesture.addEventListener('orientationchange',doLayout);
-/*
-win.addEventListener('close',function(){
-	for (var i=0;i<images.length;i++) {
-		win.remove(images[i]);
-	}
-});
-*/
 
-function doLayout(e)		
+function doLayout()		
 {
 	info.image = 'images/icons/19-gear.png';
-// get orienation from event object
 	var offset = 10;
-	var gap = 0;
+	var gap = 2;
 	var size = 70;
 	OR = Ti.UI.orientation;
 	var cols = 4;
@@ -214,10 +178,6 @@ function doLayout(e)
 	var colcounter = 1;
 	var x = offset; var y = offset;
 	for (var i=0;i<images.length;i++) {
-		//var animation = Titanium.UI.createAnimation();
-		//animation.left = x;
-		//animation.top = y;
-		//animation.duration = 250;
 		var imageView = images[i];
 		imageView.left = x;	
 		imageView.top = y;	
@@ -228,9 +188,7 @@ function doLayout(e)
 			y += size+gap;
 			colcounter = 1;
 		}
-		//Ti.API.info(x+","+y)
 	}
-
 }			  
 Ti.App.addEventListener('imageSelected', function(e) 
 { 
@@ -247,7 +205,6 @@ Ti.App.addEventListener('imageSelected', function(e)
 	slideShow.hideTabBar()
 	
 	Titanium.UI.currentTab.open(slideShow,{animated:true,modal:true,modalStyle:Ti.UI.iPhone.MODAL_PRESENTATION_FULLSCREEN});
- 	//win.navGroup.open(slideShow,{animated:true});
 });
 
 win.add(scrollView);
