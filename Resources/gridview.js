@@ -16,7 +16,7 @@ var loadingScreen = Titanium.UI.createActivityIndicator({
     style:Titanium.UI.iPhone.ActivityIndicatorStyle.DARK
 });
 loadingScreen.show();
-win.add(loadingScreen);
+win.add(loadingScreen);	
 
 function adjustImages() {
 
@@ -130,7 +130,8 @@ var x = offset; var y = offset;
 
 for (var i=0;i<win.data.images.length;i++) {
 	var imageView = Titanium.UI.createImageView({
-		image: win.data.dir+'thumbs/'+win.data.images[i].source,
+		/* image: win.data.dir+'thumbs/'+win.data.images[i].source, */
+		image: 'images/icons/icon_arrow_left.png',
 		width:70,height:70,top:y,left:x,opacity:0,
 	});
 	imageView.index = i;

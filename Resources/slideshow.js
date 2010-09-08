@@ -103,50 +103,7 @@ function toggleFullScreen() {
 		}
 	}
 }
-for(var i=0;i<win.data.images.length;i++) {
-	
-	var holder = Titanium.UI.createWindow({	
-		backgroundColor:'#000'
-	});
-	var ratio = win.data.images[i].wratio / win.data.images[i].hratio;
-	var w = 320;
-	var h = 320*ratio;
-	if(OR == 2 || OR == 4) {
-		w = 320 / ratio;
-		h = 320;
-	}
-	var op = 1;
-	if(i == 0)
-		op = 0;
-	else
-		op = 1;
-	var imageView = Titanium.UI.createImageView({
-		image: win.data.dir+win.data.images[i].source,
-		width:w,height:h,canScale:true,opacity:op
-	});
-	imageView.ratio = ratio;
-	holder.add(imageView);
-	imageViews.push(holder);
-	holder.child = imageView;
-}
 
-var scrollView = Titanium.UI.createScrollableView({
-	views:imageViews,
-	showPagingControl:false,	
-	maxZoomScale:1.0,
-	clipViews:true,
-	currentPage:win.index,
-});
-
-scrollView.addEventListener('scroll', function(e)
-{
-	i = e.currentPage;
-	win.title = (i+1) + ' / ' + win.data.images.length;
-	win.index = i;
-	Ti.App.fireEvent('imageInfoChanged', {info:win.data.images[win.index].source});
-	adjustCurrentImage();
-});
-win.add(scrollView);
 
 var dialog = Titanium.UI.createOptionDialog({
 	options:['Email','Cancel'],
@@ -224,6 +181,50 @@ var dialog2 = Titanium.UI.createOptionDialog({
 	title:'Info'
 });
 
+for(var i=0;i<win.data.images.length;i++) {
+	
+	var holder = Titanium.UI.createWindow({	
+		backgroundColor:'#000'
+	});
+	var ratio = win.data.images[i].wratio / win.data.images[i].hratio;
+	var w = 320;
+	var h = 320*ratio;
+	if(OR == 2 || OR == 4) {
+		w = 320 / ratio;
+		h = 320;
+	}
+	var op = 1;
+	if(i == 0)
+		op = 0;
+	else
+		op = 1;
+	var imageView = Titanium.UI.createImageView({
+		image: win.data.dir+win.data.images[i].source,
+		width:w,height:h,canScale:true,opacity:op
+	});
+	imageView.ratio = ratio;
+	holder.add(imageView);
+	imageViews.push(holder);
+	holder.child = imageView;
+}
+
+var scrollView = Titanium.UI.createScrollableView({
+	views:imageViews,
+	showPagingControl:false,	
+	maxZoomScale:1.0,
+	clipViews:true,
+	currentPage:win.index,
+});
+
+scrollView.addEventListener('scroll', function(e)
+{
+	i = e.currentPage;
+	win.title = (i+1) + ' / ' + win.data.images.length;
+	win.index = i;
+	Ti.App.fireEvent('imageInfoChanged', {info:win.data.images[win.index].source});
+	adjustCurrentImage();
+});
+win.add(scrollView);
 setTimeout(adjustCurrentImage,200);
 setTimeout(adjustIcons,200);
 

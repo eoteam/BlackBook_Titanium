@@ -8,7 +8,7 @@ if(OR == 2 || OR == 4){
 	w = 480;
 	h = 160;
 }
-db = Titanium.Database.install('content.db','quotes');
+db = Titanium.Database.install('content.db', '1.0');
 rows = db.execute("SELECT * FROM offices WHERE name='New York'");
 
 

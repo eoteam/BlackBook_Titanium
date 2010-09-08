@@ -5,7 +5,7 @@ var db; var rows;
 
 //win.addEventListener('focus', function(){
 
-	db = Titanium.Database.install('content.db','quotes');
+	db = Titanium.Database.install('content.db','1.0');
 	rows = db.execute('SELECT * FROM offices');
 	while (rows.isValidRow())
 	{

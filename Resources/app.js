@@ -1,13 +1,11 @@
 // this sets the background color of the master UIView (when there are no windows/tab groups on it)
 Titanium.UI.setBackgroundColor('#000');
-//Titanium.UI.iPhone.statusBarStyle = Titanium.UI.iPhone.StatusBar.TRANSLUCENT_BLACK;
 Titanium.UI.iPhone.setStatusBarStyle(Titanium.UI.iPhone.StatusBar.TRANSLUCENT_BLACK);
 
 var tabGroup = Titanium.UI.createTabGroup(
 {
 	barColor:'#000',
-	backgroundColor: '#000',
-	backgroundImage: 'images/app_start.jpg'
+	backgroundColor: '#000'
 });
 tabGroup.orientationModes = [
 		Titanium.UI.PORTRAIT,
@@ -17,10 +15,7 @@ tabGroup.orientationModes = [
 
 
 var welcomeView = Titanium.UI.createWindow({backgroundColor:'#000',title:'Pentagram',navBarHidden:false,left:0,right:0,top:0,bottom:0});
-welcomeView.hideTabBar();
-	
-
-        
+welcomeView.hideTabBar();       
 /*
 welcomeView.orientationModes = [
 		Titanium.UI.PORTRAIT,
@@ -39,17 +34,6 @@ pic.orientationModes = [
 		Titanium.UI.LANDSCAPE_RIGHT
 ];
 */
-
-
-/*
-var cb = Titanium.UI.createButton({bottom:0,right:0,
-color:"#fff",
-font:{fontSize:20,fontWeight:'bold',fontFamily:'Helvetica Neue'},
-backgroundColor:'#000',
-title:'Continue',width:100,height:25});
-welcomeView.add(cb);
-*/
-//welcomeView.setRightNavButton(cb);
 
 infoPanel = Titanium.UI.createView({
 	bottom: 0,
@@ -74,21 +58,17 @@ bg = Titanium.UI.createView({
 infoPanel.add(bg);
 
 
+var eddieIntro = "Eddie Opara, has joined Pentagram as a partner. He becomes the seventh principal in Pentagram's New York office, where his team will be based. He joins Pentagram from his own studio, The Map Office, which he established in 2005.";
 
-var label = Titanium.UI.createWebView({backgroundColor:'transparent',height:'100%',url:'eddieIntro.html'});
-//label.html = eddieIntro;
-
-
-/*
+var label = Titanium.UI.createLabel({
 	color:'#fff',
-	left:8,right:8,top:-20,height: '100%',
-	font:{fontSize:13,fontFamily: "Helvetica"},
+	left:8,right:8,top:0,height: '100%',
+	font:{fontFamily:'Helvetica Neue', fontSize:14,fontWeight:'normal'},
     editable: false,
 	text:eddieIntro
 });
-*/
-infoPanel.add(label);
 
+infoPanel.add(label);
 
 
 var partnersTab = Titanium.UI.createTab({
@@ -106,19 +86,19 @@ tabGroup.open({
 });
 
 
+
 welcomeView.addEventListener('click', function(){
 	var images;
 	var related;
 	var rowData = {};
 	
-	db = Titanium.Database.install('content.db','quotes');
+	db = Titanium.Database.install('content.db','1.0');
 	rows = db.execute('SELECT partners.*, offices.name as office FROM partners LEFT JOIN offices ON offices.id = partners.officeid 	WHERE partners.id="17"');
 	while (rows.isValidRow())
 	{
 		
 		for (var i=0;i<rows.fieldCount();i++) { 
 			rowData[rows.fieldName(i)] = rows.field(i);
-			//Ti.API.info(rows.fieldName(i)+"  "+rows.field(i));
 		}
 		rows.next();
 	}
@@ -166,7 +146,6 @@ welcomeView.addEventListener('click', function(){
 		Titanium.UI.LANDSCAPE_LEFT,
 		Titanium.UI.LANDSCAPE_RIGHT
 	];
-	//Ti.API.info(JSON.stringify(rowData));
 	
 	rowData = JSON.parse(JSON.stringify(rowData));
 	grid.data = rowData;	
