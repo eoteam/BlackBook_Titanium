@@ -17,7 +17,7 @@ b.addEventListener('click',function()
 	
 var bioField = Titanium.UI.createTextArea({
 	value: win.content,
-	font:{fontSize:14,fontFamily:"Helvetica"},
+	font:{fontFamily:'Helvetica Neue', fontSize:14,fontWeight:'normal'},
     color:'#fff',
     height:'100%',
     width:'100%',

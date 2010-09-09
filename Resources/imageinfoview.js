@@ -14,7 +14,7 @@ win.add(bg);
 
 var infoField = Titanium.UI.createTextArea({
 	value: win.info,
-	font:{fontSize:14},
+	font:{fontFamily:'Helvetica Neue', fontSize:14,fontWeight:'normal'},
     color:'#fff',
 	left:0,right:0,top:0,bottom:0,
     editable: false,   
