@@ -87,7 +87,8 @@ function adjustCurrentImage() {
 		var img = imageViews[i].child;
 		var ratio = imagesArr[i].wratio / imagesArr[i].hratio;
 		
-		if(OR == 2 || OR == 4) {
+	
+	if(OR == 3 || OR == 4) {
 			img.height = 320;
 			img.width = 320 / ratio;//win.data.images[scrollView.currentPage].wratio;
 		}
@@ -95,6 +96,7 @@ function adjustCurrentImage() {
 			img.width = 320;
 			img.height = 320 * ratio;//win.data.images[scrollView.currentPage].hratio;
 		}
+
 		
 	}
 	imageViews[win.index].child.opacity = 1;
@@ -141,7 +143,7 @@ function toggleFullScreen() {
 		win.add(toolbar);
 		win.showNavBar();
 		pad = 44;
-		if(OR == 2 || OR == 4) 
+		if(OR == 3 || OR == 4) 
 			pad = 30;
 		infoPanel.open();
 		infoPanel.info = imagesArr[win.index].source;
@@ -161,7 +163,7 @@ for(var i=0;i<imagesArr.length;i++) {
 	var ratio = imagesArr[i].wratio / imagesArr[i].hratio;
 	var w = 320;
 	var h = 320*ratio;
-	if(OR == 2 || OR == 4) {
+	if(OR == 3 || OR == 4) {
 		w = 320 / ratio;
 		h = 320;
 	}
@@ -198,7 +200,7 @@ scrollView.addEventListener('scroll', function(e)
 });
 win.add(scrollView);
 
-if(OR == 2 || OR == 4) 
+if(OR == 3 || OR == 4) 
 	pad = 30;
 
 infoPanel = Titanium.UI.createWindow({
@@ -278,13 +280,13 @@ setTimeout(adjustIcons,200);
 
 Ti.Gesture.addEventListener('orientationchange',function(e)
 {
-	Ti.API.info(e.orientation);
+	Ti.API.info("ORIENTATION======="+e.orientation);
 	OR = e.orientation;
 	
 	adjustCurrentImage();
 	
 	if(playing == false && toolBarVisible == true) {
-		if(OR == 2 || OR == 4) {
+		if(OR == 3 || OR == 4) {
 			infoPanel.bottom = 30;	
 		}
 		else {
@@ -314,7 +316,8 @@ dialog2.addEventListener('click', function(e)
 		w.orientationModes = [
 			Titanium.UI.PORTRAIT,
 			Titanium.UI.LANDSCAPE_LEFT,
-			Titanium.UI.LANDSCAPE_RIGHT
+			Titanium.UI.LANDSCAPE_RIGHT,
+			Titanium.UI.UPSIDE_PORTRAIT
 		];
 		w.content = rowData.bio;
 		Titanium.UI.currentTab.open(w,{animated:true}); 
@@ -331,7 +334,8 @@ dialog2.addEventListener('click', function(e)
 		w.orientationModes = [
 		Titanium.UI.PORTRAIT,
 		Titanium.UI.LANDSCAPE_LEFT,
-		Titanium.UI.LANDSCAPE_RIGHT
+		Titanium.UI.LANDSCAPE_RIGHT,
+		Titanium.UI.UPSIDE_PORTRAIT
 	  ];
 	   w.content = rowData.credits;
 	   Titanium.UI.currentTab.open(w,{animated:true}); 
@@ -348,7 +352,8 @@ dialog2.addEventListener('click', function(e)
 		w.orientationModes = [
 		Titanium.UI.PORTRAIT,
 		Titanium.UI.LANDSCAPE_LEFT,
-		Titanium.UI.LANDSCAPE_RIGHT
+		Titanium.UI.LANDSCAPE_RIGHT,
+		Titanium.UI.UPSIDE_PORTRAIT
 	  ];
 	  Titanium.UI.currentTab.open(w,{animated:true}); 
 	}	

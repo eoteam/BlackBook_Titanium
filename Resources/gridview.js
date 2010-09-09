@@ -98,7 +98,8 @@ var dialog2 = Titanium.UI.createOptionDialog({
 dialog2.orientationModes = [
 		Titanium.UI.PORTRAIT,
 		Titanium.UI.LANDSCAPE_LEFT,
-		Titanium.UI.LANDSCAPE_RIGHT
+		Titanium.UI.LANDSCAPE_RIGHT,
+		Titanium.UI.UPSIDE_PORTRAIT
 ];
 
 info.addEventListener('click',function(e)
@@ -120,7 +121,8 @@ dialog2.addEventListener('click', function(e)
 		w.orientationModes = [
 			Titanium.UI.PORTRAIT,
 			Titanium.UI.LANDSCAPE_LEFT,
-			Titanium.UI.LANDSCAPE_RIGHT
+			Titanium.UI.LANDSCAPE_RIGHT,
+			Titanium.UI.UPSIDE_PORTRAIT
 		];
 		w.content = rowData.bio;
 		Titanium.UI.currentTab.open(w,{animated:true}); 
@@ -135,9 +137,10 @@ dialog2.addEventListener('click', function(e)
 			url: 'bioview.js'
 		});
 		w.orientationModes = [
-		Titanium.UI.PORTRAIT,
-		Titanium.UI.LANDSCAPE_LEFT,
-		Titanium.UI.LANDSCAPE_RIGHT
+			Titanium.UI.PORTRAIT,
+			Titanium.UI.LANDSCAPE_LEFT,
+			Titanium.UI.LANDSCAPE_RIGHT,
+			Titanium.UI.UPSIDE_PORTRAIT
 	  ];
 	   w.content = rowData.credits;
 	   Titanium.UI.currentTab.open(w,{animated:true}); 
@@ -154,7 +157,8 @@ dialog2.addEventListener('click', function(e)
 		w.orientationModes = [
 		Titanium.UI.PORTRAIT,
 		Titanium.UI.LANDSCAPE_LEFT,
-		Titanium.UI.LANDSCAPE_RIGHT
+		Titanium.UI.LANDSCAPE_RIGHT,
+		Titanium.UI.UPSIDE_PORTRAIT
 	  ];		
 	  Titanium.UI.currentTab.open(w,{animated:true}); 
 	}
@@ -173,7 +177,7 @@ var gap = 2;
 var size = 70;
 OR = Titanium.UI.orientation;
 var cols = 4;
-if(OR == 2 || OR == 4)
+if(OR == 3 || OR == 4)
 	cols = 6 ;
 var colcounter = 1;
 var x = offset; var y = offset;
@@ -195,8 +199,12 @@ for (var i=0;i<imagesArr.length;i++) {
 			translucent:true,
 			barColor:'#111'
 		});
-		//slideShow.data = rowData;
-		//slideShow.data = ;
+		slideShow.orientationModes = [
+		Titanium.UI.PORTRAIT,
+		Titanium.UI.LANDSCAPE_LEFT,
+		Titanium.UI.LANDSCAPE_RIGHT,
+		Titanium.UI.UPSIDE_PORTRAIT
+	  ];
 		slideShow.index = e.source.index; 
 		slideShow.hideTabBar()
 		Titanium.UI.currentTab.open(slideShow,{animated:true});
@@ -226,10 +234,11 @@ function doLayout()
 	var gap = 2;
 	var size = 70;
 	OR = Ti.UI.orientation;
-	var cols = 4;
-	if(OR == 2 || OR == 4)
-		cols = 6 ;
-	Ti.API.info('orientationchange45',OR,cols);
+	var cols = 8;
+	if(OR == 3 || OR == 4)
+		cols = 12 ;
+	
+	Ti.API.info("=======ORIENTATION======="+Ti.UI.orientation);
 	
 	var colcounter = 1;
 	var x = offset; var y = offset;

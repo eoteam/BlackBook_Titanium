@@ -8,7 +8,6 @@ var tabGroup = Titanium.UI.createTabGroup(
 	backgroundColor: '#000'
 });
 tabGroup.orientationModes = [
-		Titanium.UI.PORTRAIT,
 		Titanium.UI.LANDSCAPE_LEFT,
 		Titanium.UI.LANDSCAPE_RIGHT
 ];
@@ -42,8 +41,7 @@ infoPanel = Titanium.UI.createView({
 });
 infoPanel.orientationModes = [
 		Titanium.UI.PORTRAIT,
-		Titanium.UI.LANDSCAPE_LEFT,
-		Titanium.UI.LANDSCAPE_RIGHT
+		Titanium.UI.LANDSCAPE_LEFT
 ];
 
 welcomeView.add(infoPanel);
@@ -100,7 +98,6 @@ welcomeView.addEventListener('click', function(){
 	grid.orientationModes = [
 		Titanium.UI.PORTRAIT,
 		Titanium.UI.LANDSCAPE_LEFT,
-		Titanium.UI.LANDSCAPE_RIGHT
 	];
 	
 /*
