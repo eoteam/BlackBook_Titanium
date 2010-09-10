@@ -8,6 +8,7 @@ if(OR == 2 || OR == 4){
 	w = 480;
 	h = 160;
 }
+/*
 db = Titanium.Database.install('content.db', '1.0');
 rows = db.execute("SELECT * FROM offices WHERE name='New York'");
 
@@ -51,15 +52,18 @@ data.imagesLoaded = true;
 
 db.close();
 
+*/
+var f = Titanium.Filesystem.getFile(Titanium.Filesystem.resourcesDirectory, 'nyoffice.json');
+var resources = JSON.parse(f.read().text);
 
 var win = Titanium.UI.currentWindow;     
 win.backButtonTitle = "Back";
 win.title = "New York Office";
 
 var imageViews = [];
-for(var i=0;i<data.images.length;i++) {
+for(var i=0;i<resources.images.length;i++) {
 	var imageView = Titanium.UI.createImageView({
-		image: 'images/offices/'+data.images[i].source,
+		image: 'images/offices/'+resources.images[i].name,
 		width:'auto',height:'auto'
 	});
 	imageViews.push(imageView);
@@ -77,8 +81,9 @@ var scrollView = Titanium.UI.createScrollableView({
 
 win.add(scrollView);
 
+var htmlText = '<html><head><style>body{width: 100%; height: 100%; background-color: #000;color: #fff; font-family : Helvetica Neue;font-size: 14px}a{color: #fff; text-decoration: none}</style></head><body><p>204 Fifth Avenue<br />New York NY 10010</p><p>T +212 683 7000<br />F +212 532 0181<br />E <a href=\"#\">info@pentagram.com</a></p><h3>Location</h3><p>Flatiron district. Our office is a five-story building between 25th and 26th Streets, directly across from Madison Square Park.</p><h3>Directions via public transport</h3><p>From N/R/W subway station at 23rd Street, walk north two blocks from the intersection of Fifth Avenue and Broadway. Our building is marked with a letter P banner.</p><p></p><p></p><p></p><p></p></body></html>';
 var descriptionField = Ti.UI.createWebView({height:h,width:w,top:h,backgroundColor:'#000'});
-descriptionField.html = data.desc;
+descriptionField.html = htmlText;//resources.office.desc;
 win.add(descriptionField);	
 
 var mapBtn = Titanium.UI.createButton({

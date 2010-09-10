@@ -15,24 +15,38 @@ tabGroup.orientationModes = [
 
 var welcomeView = Titanium.UI.createWindow({backgroundColor:'#000',title:'Pentagram',navBarHidden:false,left:0,right:0,top:0,bottom:0});
 welcomeView.hideTabBar();       
-/*
-welcomeView.orientationModes = [
-		Titanium.UI.PORTRAIT,
-		Titanium.UI.LANDSCAPE_LEFT,
-		Titanium.UI.LANDSCAPE_RIGHT
-];
 
-*/
+var partnersTab = Titanium.UI.createTab({
+    title:'Partners',
+    height:0,
+    icon: Titanium.UI.iPhone.SystemIcon.MOST_VIEWED,
+    window:welcomeView,active:true
+});
+
+
+welcomeView.addEventListener('click', function(){
+			
+	var grid = Titanium.UI.createWindow({
+		url: 'gridview.js',
+		backgroundColor:'#000',
+		navBarHidden:false,
+		barColor:'#111',
+		title:'Eddie Opara'
+	}); 
+	grid.hideTabBar();	 
+	grid.orientationModes = [
+			Titanium.UI.PORTRAIT,
+			Titanium.UI.LANDSCAPE_LEFT,
+			Titanium.UI.LANDSCAPE_RIGHT,
+			Titanium.UI.UPSIDE_PORTRAIT
+	];
+	partnersTab.open(grid,{animate:true});		
+});
+
 
 var pic = Titanium.UI.createImageView({image: 'images/partners/Pentagram_081710_0227_b.jpg',width:'auto',height:'auto'});
 welcomeView.add(pic);
-/*
-pic.orientationModes = [
-		Titanium.UI.PORTRAIT,
-		Titanium.UI.LANDSCAPE_LEFT,
-		Titanium.UI.LANDSCAPE_RIGHT
-];
-*/
+
 
 infoPanel = Titanium.UI.createView({
 	bottom: 0,
@@ -69,45 +83,11 @@ var label = Titanium.UI.createLabel({
 infoPanel.add(label);
 
 
-var partnersTab = Titanium.UI.createTab({
-    title:'Partners',
-    height:0,
-    icon: Titanium.UI.iPhone.SystemIcon.MOST_VIEWED,
-    window:welcomeView,active:true
-});
+
 
 
 tabGroup.addTab(partnersTab);
 tabGroup.setActiveTab(0);
 tabGroup.open({
 	transition:Titanium.UI.iPhone.AnimationStyle.FLIP_FROM_LEFT
-});
-
-
-
-welcomeView.addEventListener('click', function(){
-			
-	var grid = Titanium.UI.createWindow({
-		url: 'gridview.js',
-		backgroundColor:'#000',
-		navBarHidden:false,
-		barColor:'#111',
-		title:'Eddie Opara'
-	}); 
-	grid.hideTabBar();	 
-	grid.orientationModes = [
-		Titanium.UI.PORTRAIT,
-		Titanium.UI.LANDSCAPE_LEFT,
-	];
-	
-/*
-
-	grid.addEventListener('focus',function(){
-		var animation2 = Titanium.UI.createAnimation();
-		animation2.opacity = 1;
-		animation2.duration = 1;
-		tabGroup.animate(animation2);	
-	});  
-*/
-	partnersTab.open(grid,{animate:true});		
 });

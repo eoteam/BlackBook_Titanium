@@ -2,25 +2,12 @@
 var win = Titanium.UI.currentWindow;     
 win.backButtonTitle = "Back";
 
+var images = [];
+var list;
+var OR = Titanium.UI.orientation;
+var f = Titanium.Filesystem.getFile(Titanium.Filesystem.resourcesDirectory, 'content.json');
+var resources = JSON.parse(f.read().text);
 /*
-var loadView = Ti.UI.createView({
-    backgroundColor: '#d8d8d8',
-    height: 480,
-    width: 320
-});
-var loadingScreen = Titanium.UI.createActivityIndicator({
-    height:50,
-    width:210,
-    color:'#404347',
-    font:{fontFamily:'Helvetica Neue', fontSize:14,fontWeight:'normal'},
-    message:'Loading...',
-    style:Titanium.UI.iPhone.ActivityIndicatorStyle.DARK
-});
-
-win.add(loadingScreen);	
-loadingScreen.show();
-*/
-
 	var imagesArr;
 	var related;
 	var rowData = {};
@@ -59,12 +46,8 @@ loadingScreen.show();
 	
 	rows.close();
 	db.close();
-	/*
-rowData.textLoaded = true;
-	rowData = JSON.parse(JSON.stringify(rowData));
-	grid.data = rowData;	
-
 */
+
 
 
 
@@ -78,9 +61,7 @@ function adjustImages() {
 	}
 }
 
-var images = [];
-var list;
-var OR = Titanium.UI.orientation;
+
 
 var info = Titanium.UI.createButton({
 	image: 'images/icons/19-gear.png'
@@ -124,7 +105,7 @@ dialog2.addEventListener('click', function(e)
 			Titanium.UI.LANDSCAPE_RIGHT,
 			Titanium.UI.UPSIDE_PORTRAIT
 		];
-		w.content = rowData.bio;
+		w.content = partner.bio;
 		Titanium.UI.currentTab.open(w,{animated:true}); 
 	}
 	else if(e.index == 1) {
@@ -142,7 +123,7 @@ dialog2.addEventListener('click', function(e)
 			Titanium.UI.LANDSCAPE_RIGHT,
 			Titanium.UI.UPSIDE_PORTRAIT
 	  ];
-	   w.content = rowData.credits;
+	   w.content = partner.credits;
 	   Titanium.UI.currentTab.open(w,{animated:true}); 
 	}
 	else if(e.index == 2) {
@@ -163,15 +144,9 @@ dialog2.addEventListener('click', function(e)
 	  Titanium.UI.currentTab.open(w,{animated:true}); 
 	}
 });
-var scrollView = Titanium.UI.createScrollView({
-    contentWidth:'auto',
-    contentHeight:'auto',
-    top:0,left:4,right:0,
-    showVerticalScrollIndicator:true,
-    showHorizontalScrollIndicator:true
-});
 
 
+var partner = resources.partner;
 var offset = 10;
 var gap = 2;
 var size = 70;
@@ -180,16 +155,26 @@ var cols = 4;
 if(OR == 3 || OR == 4)
 	cols = 6 ;
 var colcounter = 1;
-var x = offset; var y = offset;
-
-for (var i=0;i<imagesArr.length;i++) {
+var x = offset; 
+var y = offset;
+var scrollView = Titanium.UI.createScrollView({
+    contentWidth:'auto',
+    contentHeight:'auto',
+    top:0,left:4,right:0,
+    showVerticalScrollIndicator:true,
+    showHorizontalScrollIndicator:true
+});
+for (var i=0;i<resources.images.length;i++) {
+	var image = resources.images[i];
 	var imageView = Titanium.UI.createImageView({
-		 image: rowData.dir+'thumbs/'+imagesArr[i].source,
-		/* image: 'images/icons/icon_arrow_left.png', */
-		width:70,height:70,top:y,left:x,opacity:0,
+		 image: partner.dir+'thumbs/'+image.name,
+		 opacity:0,
+		/*  image: 'images/icons/icon_arrow_left.png', */
+		 width:70,height:70,top:y,left:x,canScale:true
 	});
 	imageView.index = i;
 	images[i] = imageView;
+
 
 	imageView.addEventListener('click',function(e){	
 		var slideShow = Titanium.UI.createWindow({
@@ -201,14 +186,13 @@ for (var i=0;i<imagesArr.length;i++) {
 		});
 		slideShow.orientationModes = [
 		Titanium.UI.PORTRAIT,
-		Titanium.UI.LANDSCAPE_LEFT,
-		Titanium.UI.LANDSCAPE_RIGHT,
 		Titanium.UI.UPSIDE_PORTRAIT
 	  ];
 		slideShow.index = e.source.index; 
 		slideShow.hideTabBar()
 		Titanium.UI.currentTab.open(slideShow,{animated:true});
-	});		
+	});	
+	
 
 	scrollView.add(imageView);	
 	x += size+gap;
@@ -219,26 +203,21 @@ for (var i=0;i<imagesArr.length;i++) {
 		colcounter = 1;
 	}
 }
-/*
-loadingScreen.hide();
-win.remove(loadingScreen);
-*/
-setTimeout(adjustImages,1000);
 
-Ti.Gesture.addEventListener('orientationchange',doLayout);
+win.add(scrollView);
+setTimeout(adjustImages,200);
 
-function doLayout()		
-{
+Ti.Gesture.addEventListener('orientationchange',function(e){
 	info.image = 'images/icons/19-gear.png';
 	var offset = 10;
 	var gap = 2;
 	var size = 70;
-	OR = Ti.UI.orientation;
-	var cols = 8;
+	OR = e.orientation;
+	var cols = 4;
 	if(OR == 3 || OR == 4)
-		cols = 12 ;
+		cols = 6;
 	
-	Ti.API.info("=======ORIENTATION======="+Ti.UI.orientation);
+	Ti.API.info("=======ORIENTATION======="+e.orientation);
 	
 	var colcounter = 1;
 	var x = offset; var y = offset;
@@ -254,23 +233,7 @@ function doLayout()
 			colcounter = 1;
 		}
 	}
-}			  
-Ti.App.addEventListener('imageSelected', function(e) 
-{ 
-	var index = e.index;
- 	var slideShow = Titanium.UI.createWindow({
-		 	url: 'slideshow.js',
-			backgroundColor:'#000',
-			navBarHidden:false,
-			translucent:true,
-			barColor:'#111'
-	});
-	slideShow.data = rowData;
-	slideShow.index = index; 
-	slideShow.hideTabBar()
-	
-	Titanium.UI.currentTab.open(slideShow,{animated:true,modal:true,modalStyle:Ti.UI.iPhone.MODAL_PRESENTATION_FULLSCREEN});
-});
+});			  
 
-win.add(scrollView);
+
 	

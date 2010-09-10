@@ -11,10 +11,14 @@ var timer;
 var OR = Titanium.UI.orientation;
 var pad = 44;
 
-
-	var imagesArr;
+var f = Titanium.Filesystem.getFile(Titanium.Filesystem.resourcesDirectory, 'content.json');
+var resources = JSON.parse(f.read().text);
+var imagesArr = resources.images;
+var rowData = resources.partner;
+/*
+	
 	var related;
-	var rowData = {};
+	 = {};
 	
 	db = Titanium.Database.install('content.db','1.0');
 	rows = db.execute('SELECT partners.*, offices.name as office FROM partners LEFT JOIN offices ON offices.id = partners.officeid 	WHERE partners.id="17"');
@@ -50,6 +54,7 @@ var pad = 44;
 	
 	rows.close();
 	db.close();
+*/
 
 
 win.title = (win.index+1) + ' / ' + imagesArr.length;
@@ -79,22 +84,25 @@ function adjustCurrentImage() {
 	prev.image = 'images/icons/icon_arrow_left.png';	
 	next.image = 'images/icons/icon_arrow_right.png';
 	info.image = 'images/icons/19-gear.png';
-	var start = win.index-1;
+	/*
+var start = win.index-1;
 	if(win.index == 0)
 		start = 0;
+*/
 				
-	for(var i=start;i<=win.index+1;i++) {
+	for(var i=0;i<imagesArr.length;i++) {
 		var img = imageViews[i].child;
 		var ratio = imagesArr[i].wratio / imagesArr[i].hratio;
 		
+		//Ti.API.info(imagesArr[i].wratio+' '+imagesArr[i].hratio); 
 	
 	if(OR == 3 || OR == 4) {
 			img.height = 320;
-			img.width = 320 / ratio;//win.data.images[scrollView.currentPage].wratio;
+			img.width = 320 * ratio;//win.data.images[scrollView.currentPage].wratio;
 		}
 		else {
 			img.width = 320;
-			img.height = 320 * ratio;//win.data.images[scrollView.currentPage].hratio;
+			img.height = 320 / ratio;//win.data.images[scrollView.currentPage].hratio;
 		}
 
 		
@@ -107,9 +115,9 @@ function adjustCurrentImage() {
 	}
 }		
 function displayImage() {
-	scrollView.scrollToView(scrollView.views[win.index]);
+	scrollView.scrollToView(scrollView.views[win.index]);	
 	win.title = (win.index+1) + ' / ' + imagesArr.length;
-	Ti.App.fireEvent('imageInfoChanged', {info:imagesArr[win.index].source});
+	Ti.App.fireEvent('imageInfoChanged', {info:imagesArr[win.index].name});
 }
 function closeInfoWindow() {
 	infoVisible = false;
@@ -146,7 +154,7 @@ function toggleFullScreen() {
 		if(OR == 3 || OR == 4) 
 			pad = 30;
 		infoPanel.open();
-		infoPanel.info = imagesArr[win.index].source;
+		infoPanel.info = imagesArr[win.index].name;
 		if(playing) {
 			playing = false;
 			clearInterval(timer);
@@ -162,9 +170,9 @@ for(var i=0;i<imagesArr.length;i++) {
 	});
 	var ratio = imagesArr[i].wratio / imagesArr[i].hratio;
 	var w = 320;
-	var h = 320*ratio;
+	var h = 320 / ratio;
 	if(OR == 3 || OR == 4) {
-		w = 320 / ratio;
+		w = 320 * ratio;
 		h = 320;
 	}
 	var op = 1;
@@ -173,8 +181,8 @@ for(var i=0;i<imagesArr.length;i++) {
 	else
 		op = 1;
 	var imageView = Titanium.UI.createImageView({
-		image: rowData.dir+imagesArr[i].source,
-		width:w,height:h,canScale:true,opacity:op
+		image: rowData.dir+imagesArr[i].name,
+		width:w,height:h,opacity:op
 	});
 	imageView.ratio = ratio;
 	holder.add(imageView);
@@ -185,7 +193,7 @@ for(var i=0;i<imagesArr.length;i++) {
 var scrollView = Titanium.UI.createScrollableView({
 	views:imageViews,
 	showPagingControl:false,	
-	maxZoomScale:1.0,
+	maxZoomScale:2.0,
 	clipViews:true,
 	currentPage:win.index,
 });
@@ -195,7 +203,7 @@ scrollView.addEventListener('scroll', function(e)
 	i = e.currentPage;
 	win.title = (i+1) + ' / ' + imagesArr.length;
 	win.index = i;
-	Ti.App.fireEvent('imageInfoChanged', {info:imagesArr[win.index].source});
+	Ti.App.fireEvent('imageInfoChanged', {info:imagesArr[win.index].name});
 	adjustCurrentImage();
 });
 win.add(scrollView);
@@ -211,7 +219,7 @@ infoPanel = Titanium.UI.createWindow({
 	backgroundColor:'transparent',
 	url: 'imageinfoview.js'
 });
-infoPanel.info = imagesArr[win.index].source;
+infoPanel.info = imagesArr[win.index].name;
 win.add(infoPanel);
 infoPanel.open();
 
@@ -269,7 +277,7 @@ dialog.addEventListener('click',function(e)
   		emailDialog.subject = "Eddie Opara's work";
   		emailDialog.toRecipients = [];
   		emailDialog.messageBody = imagesArr[win.index].info;
-		var f = Ti.Filesystem.getFile(rowData.dir+imagesArr[win.index].source);
+		var f = Ti.Filesystem.getFile(rowData.dir+imagesArr[win.index].name);
 		emailDialog.addAttachment(f);
 		emailDialog.open();
 	}
@@ -283,7 +291,7 @@ Ti.Gesture.addEventListener('orientationchange',function(e)
 	Ti.API.info("ORIENTATION======="+e.orientation);
 	OR = e.orientation;
 	
-	adjustCurrentImage();
+	//adjustCurrentImage();
 	
 	if(playing == false && toolBarVisible == true) {
 		if(OR == 3 || OR == 4) {
@@ -292,7 +300,7 @@ Ti.Gesture.addEventListener('orientationchange',function(e)
 		else {
 			infoPanel.bottom = 44;
 		}
-		infoPanel.info = imagesArr[win.index].source;
+		infoPanel.info = imagesArr[win.index].name;
 	}
 });
 info.addEventListener('click',function(e)
@@ -398,4 +406,4 @@ next.addEventListener('click', function()
 	displayImage();
 });
 
-//setTimeout(adjustCurrentImage(),3000);
+/* setTimeout(adjustCurrentImage(),1000); */

@@ -1,0 +1,8 @@
+{
+	"office": {
+		"name" : "New York",
+		"desc":"",
+		"coords" : "40.74303,-73.988686"
+	},
+	"images" :[{"wratio":"0","hratio":"0","type":"offices","contentid":"2","id":"4","name":"NY-office.jpg","info":"","color":""},{"wratio":"0","hratio":"0","type":"offices","contentid":"2","id":"5","name":"NY-Exterior.jpg","info":"","color":""},{"wratio":"0","hratio":"0","type":"offices","contentid":"2","id":"6","name":"NY-3rd-floor-conferance.jpg","info":"","color":""}]
+} 
