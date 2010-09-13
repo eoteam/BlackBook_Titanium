@@ -23,6 +23,7 @@ var bioField = Titanium.UI.createTextArea({
     width:'100%',
     shadowColor:'#aaa',
     editable: false,
+    maxZoomScale:2,
     backgroundColor: '#000',
     borderStyle:Titanium.UI.INPUT_BORDERSTYLE_ROUNDED
 });

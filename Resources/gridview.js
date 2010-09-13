@@ -51,6 +51,7 @@ var resources = JSON.parse(f.read().text);
 
 
 
+/*
 function adjustImages() {
 
 	for(var i=0;i<images.length;i++) {
@@ -60,6 +61,7 @@ function adjustImages() {
 		img.height = 70;
 	}
 }
+*/
 
 
 
@@ -168,7 +170,6 @@ for (var i=0;i<resources.images.length;i++) {
 	var image = resources.images[i];
 	var imageView = Titanium.UI.createImageView({
 		 image: partner.dir+'thumbs/'+image.name,
-		 opacity:0,
 		/*  image: 'images/icons/icon_arrow_left.png', */
 		 width:70,height:70,top:y,left:x,canScale:true
 	});
@@ -185,8 +186,10 @@ for (var i=0;i<resources.images.length;i++) {
 			barColor:'#111'
 		});
 		slideShow.orientationModes = [
-		Titanium.UI.PORTRAIT,
-		Titanium.UI.UPSIDE_PORTRAIT
+			Titanium.UI.PORTRAIT,
+			Titanium.UI.LANDSCAPE_LEFT,
+			Titanium.UI.LANDSCAPE_RIGHT,
+			Titanium.UI.UPSIDE_PORTRAIT
 	  ];
 		slideShow.index = e.source.index; 
 		slideShow.hideTabBar()
@@ -205,7 +208,7 @@ for (var i=0;i<resources.images.length;i++) {
 }
 
 win.add(scrollView);
-setTimeout(adjustImages,200);
+//setTimeout(adjustImages,200);
 
 Ti.Gesture.addEventListener('orientationchange',function(e){
 	info.image = 'images/icons/19-gear.png';

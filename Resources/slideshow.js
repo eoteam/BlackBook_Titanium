@@ -59,7 +59,7 @@ var rowData = resources.partner;
 
 win.title = (win.index+1) + ' / ' + imagesArr.length;
 
-/*
+
 
 var loadingScreen = Titanium.UI.createActivityIndicator({
     height:50,
@@ -71,7 +71,7 @@ var loadingScreen = Titanium.UI.createActivityIndicator({
 });
 loadingScreen.show();
 win.add(loadingScreen);
-*/
+
 
 
 
@@ -84,17 +84,18 @@ function adjustCurrentImage() {
 	prev.image = 'images/icons/icon_arrow_left.png';	
 	next.image = 'images/icons/icon_arrow_right.png';
 	info.image = 'images/icons/19-gear.png';
-	/*
-var start = win.index-1;
+	
+	var start = win.index-1;
 	if(win.index == 0)
 		start = 0;
-*/
-				
+
+
+	var img = imageViews[win.index].child;
+	scrollView.contentWidth 			
 	for(var i=0;i<imagesArr.length;i++) {
 		var img = imageViews[i].child;
 		var ratio = imagesArr[i].wratio / imagesArr[i].hratio;
 		
-		//Ti.API.info(imagesArr[i].wratio+' '+imagesArr[i].hratio); 
 	
 	if(OR == 3 || OR == 4) {
 			img.height = 320;
@@ -107,10 +108,10 @@ var start = win.index-1;
 
 		
 	}
-	imageViews[win.index].child.opacity = 1;
+	//imageViews[win.index].child.opacity = 1;
 	if(first) {
-		//loadingScreen.hide();
-		//win.remove(loadingScreen);
+		loadingScreen.hide();
+		win.remove(loadingScreen);
 		first = false;
 	}
 }		
@@ -181,8 +182,7 @@ for(var i=0;i<imagesArr.length;i++) {
 	else
 		op = 1;
 	var imageView = Titanium.UI.createImageView({
-		image: rowData.dir+imagesArr[i].name,
-		width:w,height:h,opacity:op
+		image: rowData.dir+imagesArr[i].name,width:w,height:h
 	});
 	imageView.ratio = ratio;
 	holder.add(imageView);
@@ -291,7 +291,7 @@ Ti.Gesture.addEventListener('orientationchange',function(e)
 	Ti.API.info("ORIENTATION======="+e.orientation);
 	OR = e.orientation;
 	
-	//adjustCurrentImage();
+	adjustCurrentImage();
 	
 	if(playing == false && toolBarVisible == true) {
 		if(OR == 3 || OR == 4) {
